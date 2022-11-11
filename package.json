@@ -1,0 +1,53 @@
+{
+	"name": "written-numbers-website",
+	"scripts": {
+		"dev": "solid-start dev",
+		"build": "solid-start build",
+		"start": "solid-start start",
+		"preview": "solid-start build && solid-start start"
+	},
+	"type": "module",
+	"devDependencies": {
+		"@types/markdown-it": "^12.2.3",
+		"@types/node": "^18.11.7",
+		"autoprefixer": "^10.4.12",
+		"debug": "^4.3.4",
+		"nominal-types": "^0.1.2",
+		"postcss": "^8.4.18",
+		"postcss-mixins": "^9.0.4",
+		"postcss-nested": "^5.0.6",
+		"postcss-preset-env": "^7.8.2",
+		"postcss-scrollbar": "^0.5.1",
+		"rimraf": "^3.0.2",
+		"solid-start-node": "^0.2.0",
+		"ts-node": "^10.9.1",
+		"typescript": "^4.8.4",
+		"unplugin": "^0.7.2",
+		"vite": "^3.2.3"
+	},
+	"engines": {
+		"node": ">=16"
+	},
+	"dependencies": {
+		"@lexical/clipboard": "^0.3.11",
+		"@lexical/history": "^0.3.11",
+		"@lexical/markdown": "^0.3.11",
+		"@lexical/rich-text": "^0.3.11",
+		"@lexical/selection": "^0.3.11",
+		"@lexical/utils": "^0.3.11",
+		"@markdoc/markdoc": "^0.2.1",
+		"@solid-primitives/destructure": "^0.1.3",
+		"@solid-primitives/intersection-observer": "^2.0.2",
+		"@solidjs/meta": "^0.28.2",
+		"@solidjs/router": "^0.5.0",
+		"csstype": "^3.1.1",
+		"firebase": "^9.12.1",
+		"lexical": "^0.3.11",
+		"markdown-it": "^13.0.1",
+		"solid-js": "^1.6.2",
+		"solid-start": "^0.2.5",
+		"solid-start-vercel": "^0.2.5",
+		"undici": "^5.11.0",
+		"written-numbers": "^0.1.12"
+	}
+}

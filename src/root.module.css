@@ -1,0 +1,163 @@
+@import "~/mixins.css";
+
+html {
+	overflow-x: hidden;
+}
+
+:root {
+	--nav-height: 4rem;
+	--nav-border-height: 4px;
+}
+
+.autoTheme {
+	@media (prefers-color-scheme: dark) {
+		@mixin dark-theme;
+	}
+	@media (prefers-color-scheme: light) {
+		@mixin light-theme;
+	}
+}
+.lightTheme {
+	@mixin light-theme;
+}
+.darkTheme {
+	@mixin dark-theme;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	font-family: "Mukta", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Manrope", sans-serif;
+}
+
+h1 {
+	font-size: 3rem;
+}
+h2 {
+	font-size: 2rem;
+}
+h3 {
+	font-size: 1.5rem;
+}
+h4 {
+	font-size: 1.25rem;
+}
+h5 {
+	font-size: 1rem;
+}
+h6 {
+	font-size: 0.75rem;
+}
+
+body {
+	font-family: Gordita, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+		"Helvetica Neue", sans-serif;
+	margin: 0;
+	color: var(--text-color);
+	background-color: var(--background-primary);
+
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+input,
+textarea {
+	color: var(--text-color);
+	background-color: var(--background-primary);
+	border: 1px solid var(--accent-color-ghost);
+	border-radius: 4px;
+}
+button,
+input[type="button"] {
+	cursor: pointer;
+	background-color: var(--background-primary);
+	border: 1px solid var(--accent-color-ghost);
+	border-radius: 0.25em;
+
+	color: var(--text-color);
+
+	padding: 0.5em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+
+	transition-property: background-color;
+	transition-duration: 0.2s;
+
+	font-size: 1em;
+
+	&:hover {
+		background-color: var(--accent-color-ghost);
+	}
+
+	&:active {
+		background-color: var(--accent-color);
+	}
+
+	&[disabled] {
+		background-color: var(--accent-color-ghost);
+		cursor: not-allowed;
+	}
+}
+
+a {
+	color: var(--accent-color);
+}
+
+picture {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	overflow: hidden;
+
+	> source {
+		display: none;
+	}
+	> img {
+		object-position: center;
+		object-fit: contain;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.content {
+	padding: 0 10vw;
+	padding-top: calc(var(--nav-height) - var(--nav-border-height));
+	padding-bottom: 2em;
+	flex: 1;
+}
+
+* {
+	--scrollbar-background: var(--background-tertiary);
+	--scrollbar-accent: var(--accent-color);
+
+	scrollbar-color: var(--scrollbar-accent) var(--scrollbar-background);
+	scrollbar-width: thin;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--scrollbar-accent);
+}
+*::-webkit-scrollbar-track {
+	background-color: var(--scrollbar-background);
+}
+*::-webkit-scrollbar-corner {
+	background-color: var(--scrollbar-background);
+}
+*::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}

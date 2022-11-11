@@ -1,0 +1,28 @@
+@define-mixin light-theme {
+	--text-color: oklch(17.69% 0 102.07);
+
+	color: var(--text-color);
+
+	--accent-color: oklch(68.25% 0.297 138.33);
+	--accent-color-alt: oklch(76.83% 0.298 138.33);
+	--accent-color-ghost: oklch(68.25% 0.297 138.33 / 30%);
+
+	--background-primary: oklch(92.89% 0 102.07);
+	--background-secondary: oklch(89.44% 0 102.07);
+	--background-tertiary: oklch(85.99% 0 102.07);
+	--background-transparent: oklch(100% 0 102.07 / 30%);
+}
+@define-mixin dark-theme {
+	--text-color: oklch(95.69% 0 102.07);
+
+	color: var(--text-color);
+
+	--accent-color: oklch(68.25% 0.297 138.33);
+	--accent-color-alt: oklch(76.83% 0.298 138.33);
+	--accent-color-ghost: oklch(68.25% 0.297 138.33 / 30%);
+
+	--background-primary: oklch(20.9% 0 102.07);
+	--background-secondary: oklch(24.35% 0 102.07);
+	--background-tertiary: oklch(27.8% 0 102.07);
+	--background-transparent: oklch(0% 0 0 / 30%);
+}
