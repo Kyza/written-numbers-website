@@ -170,13 +170,6 @@ export default (function Home() {
 					>
 						Run The Code
 					</button>
-					<button
-						onclick={() => {
-							window.close();
-						}}
-					>
-						Save Me!
-					</button>
 				</Show>
 				<Show when={userIsSafe() || userConfirmedRun()}>
 					<p>
