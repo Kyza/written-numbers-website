@@ -8,12 +8,11 @@ export type MessageData = WordOptions & {
 
 onmessage = (message) => {
 	const data: MessageData = message.data;
-	console.log("data", data);
 
 	const expression =
 		message.data.expression.length > 0 ? message.data.expression : "0";
 
-	let evaluated;
+	let evaluated: string;
 	if (/^\d+$/.test(expression)) {
 		evaluated = expression;
 	} else {
@@ -23,10 +22,8 @@ onmessage = (message) => {
 			`return ${expression}`
 		)(toWords, toOrdinal);
 	}
-	console.log(evaluated);
 
 	let words = toWords(evaluated, data);
-	console.log(words);
 
 	if (data.ordinal) {
 		words = toOrdinal(words);
