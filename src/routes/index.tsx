@@ -341,21 +341,23 @@ export default (function Home() {
 						Clear
 					</button>
 				</Show>
-				<Show
-					when={
-						expressionSafety() === true ||
-						(typeof expressionSafety() === "string" &&
-							userConfirmedRuns[expressionSafety() as string])
-					}
-				>
-					<p>
-						<Show
-							when={!isServer && !numberWords.loading}
-							fallback={<LoadingText text="Calculating" />}
-						>
-							{numberWords()}
-						</Show>
-					</p>
+				<Show when={!isServer}>
+					<Show
+						when={
+							expressionSafety() === true ||
+							(typeof expressionSafety() === "string" &&
+								userConfirmedRuns[expressionSafety() as string])
+						}
+					>
+						<p>
+							<Show
+								when={!numberWords.loading}
+								fallback={<LoadingText text="Calculating" />}
+							>
+								{numberWords()}
+							</Show>
+						</p>
+					</Show>
 				</Show>
 			</article>
 			<p>
