@@ -170,8 +170,6 @@ export default (function Home() {
 			(typeof expressionSafety() === "string" &&
 				userConfirmedRuns[expressionSafety() as string])
 		) {
-			console.log(expressionSafety(), userConfirmedRuns);
-
 			recalculateWords();
 		}
 	});
@@ -352,7 +350,7 @@ export default (function Home() {
 				>
 					<p>
 						<Show
-							when={!numberWords.loading}
+							when={!isServer && !numberWords.loading}
 							fallback={<LoadingText text="Calculating" />}
 						>
 							{numberWords()}
