@@ -131,6 +131,8 @@ export default (function Home() {
 				ordinal: ordinal(),
 			};
 			const stringData = JSON.stringify(data);
+			console.log(stringData);
+
 			if (cache.has(stringData)) {
 				return cache.get(stringData);
 			}
@@ -140,12 +142,12 @@ export default (function Home() {
 				lastWorker = worker;
 
 				worker.onmessage = (message) => {
-					cache.set(expression(), message.data);
+					cache.set(stringData, message.data);
 					resolve(message.data);
 				};
 
 				worker.onerror = (error) => {
-					cache.set(expression(), error.message);
+					cache.set(stringData, error.message);
 					resolve(error.message);
 				};
 
