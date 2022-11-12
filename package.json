@@ -29,25 +29,13 @@
 		"node": ">=16"
 	},
 	"dependencies": {
-		"@lexical/clipboard": "^0.3.11",
-		"@lexical/history": "^0.3.11",
-		"@lexical/markdown": "^0.3.11",
-		"@lexical/rich-text": "^0.3.11",
-		"@lexical/selection": "^0.3.11",
-		"@lexical/utils": "^0.3.11",
-		"@markdoc/markdoc": "^0.2.1",
-		"@solid-primitives/destructure": "^0.1.3",
-		"@solid-primitives/intersection-observer": "^2.0.2",
 		"@solidjs/meta": "^0.28.2",
 		"@solidjs/router": "^0.5.0",
 		"csstype": "^3.1.1",
-		"firebase": "^9.12.1",
-		"lexical": "^0.3.11",
-		"markdown-it": "^13.0.1",
 		"solid-js": "^1.6.2",
 		"solid-start": "^0.2.5",
 		"solid-start-vercel": "^0.2.5",
 		"undici": "^5.11.0",
-		"written-numbers": "^0.1.12"
+		"written-numbers": "^0.1.13"
 	}
 }

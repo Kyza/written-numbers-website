@@ -59,11 +59,20 @@ export default (function Home() {
 	const userIsSafe = createCrossSignal(isSafeExpression(numberExpression()));
 	const userConfirmedRun = createCrossSignal(false);
 
+	const and = createCrossSignal(false);
+	const commas = createCrossSignal(false);
+
 	const [numberWords, { refetch: recalculateWords }] =
 		createResource<string>(async () => {
 			if (isServer) return "Loading...";
-			if (cache.has(numberExpression())) {
-				return cache.get(numberExpression());
+			const data = {
+				expression: numberExpression(),
+				and: and(),
+				commas: commas(),
+			};
+			const stringData = JSON.stringify(data);
+			if (cache.has(stringData)) {
+				return cache.get(stringData);
 			}
 			return new Promise((resolve) => {
 				if (lastWorker) lastWorker.terminate();
@@ -80,7 +89,7 @@ export default (function Home() {
 					resolve(error.message);
 				};
 
-				worker.postMessage(numberExpression());
+				worker.postMessage(data);
 			});
 		});
 
@@ -142,6 +151,24 @@ export default (function Home() {
 						min={minRandom()}
 						value={maxRandom()}
 					/>
+					<button
+						onclick={() => {
+							and(!and());
+							recalculateWords();
+						}}
+					>
+						<input type="checkbox" checked={and()} />
+						Hundred And
+					</button>
+					<button
+						onclick={() => {
+							commas(!commas());
+							recalculateWords();
+						}}
+					>
+						<input type="checkbox" checked={commas()} />
+						Commas
+					</button>
 					<input
 						type="button"
 						onclick={() => {

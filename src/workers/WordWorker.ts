@@ -1,7 +1,12 @@
 import { toOrdinal, toWords } from "written-numbers/src/index";
+import { WordOptions } from "written-numbers/src/toWords";
 
 onmessage = (message) => {
-	const expression = message.data.length > 0 ? message.data : "0";
+	const { data } = message;
+	console.log("data", data);
+
+	const expression =
+		message.data.expression.length > 0 ? message.data.expression : "0";
 
 	let evaluated;
 	if (/^\d+$/.test(expression)) {
@@ -15,7 +20,7 @@ onmessage = (message) => {
 	}
 	console.log(evaluated);
 
-	const words = toWords(evaluated);
+	const words = toWords(evaluated, data as WordOptions);
 	console.log(words);
 
 	postMessage(words);

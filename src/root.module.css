@@ -80,7 +80,11 @@ textarea {
 }
 button,
 input[type="button"] {
-	cursor: pointer;
+	&,
+	input[type="checkbox"] {
+		cursor: pointer;
+	}
+
 	background-color: var(--background-primary);
 	border: 1px solid var(--accent-color-ghost);
 	border-radius: 0.25em;
