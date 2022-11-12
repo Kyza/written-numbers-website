@@ -118,8 +118,7 @@ export default (function Home() {
 					class={styles.expressionBox}
 					value={numberExpression()}
 					oninput={(e) => {
-						const el = e.target as HTMLInputElement;
-						numberExpression(el.value);
+						numberExpression(e.currentTarget.value);
 					}}
 				/>
 				<div class={styles.controlGroup}>
