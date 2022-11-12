@@ -24,7 +24,7 @@ specifiers:
   undici: ^5.11.0
   unplugin: ^0.7.2
   vite: ^3.2.3
-  written-numbers: ^0.1.18
+  written-numbers: ^0.1.19
 
 dependencies:
   '@solidjs/meta': 0.28.2_solid-js@1.6.2
@@ -34,7 +34,7 @@ dependencies:
   solid-start: 0.2.5_3zrnixj5s2zo7r5ma456ac2ypm
   solid-start-vercel: 0.2.5_2vl7t2isauczczoyh2fi2qmdqy
   undici: 5.11.0
-  written-numbers: 0.1.18
+  written-numbers: 0.1.19
 
 devDependencies:
   '@types/markdown-it': 12.2.3
@@ -3651,8 +3651,8 @@ packages:
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /written-numbers/0.1.18:
-    resolution: {integrity: sha512-+uhXvoPcz5NoHIDlbK/eIMgfpaG9yC17uTuw0JxuRzxyBeaoAfgdKVZAFbVezqmaNUylFBJQV/TOTM9jiHBHzg==}
+  /written-numbers/0.1.19:
+    resolution: {integrity: sha512-rbfFdkdFkfCDd1NnnWp8lFQTDJh43LFkY+5H+qEaN29qsfut9S6jRz1VK0fGLCrRDS0lM0Uy6PcCLfisR2Q5/Q==}
     dev: false
 
   /y18n/5.0.8:
