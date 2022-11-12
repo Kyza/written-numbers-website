@@ -221,6 +221,7 @@ export default (function Home() {
 					</p>
 					<p>Are you sure you want to run it?</p>
 					<button
+						class={styles.button}
 						onclick={() => {
 							userConfirmedRun(true);
 						}}
