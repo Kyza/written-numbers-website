@@ -16,6 +16,8 @@
 	border-radius: 4px;
 	border: 1px solid var(--accent-color-ghost);
 
+	white-space: nowrap;
+
 	> *:not(:last-child) {
 		border-bottom: 1px solid var(--accent-color-ghost) !important;
 	}
@@ -45,11 +47,8 @@
 	display: flex;
 	flex-wrap: wrap;
 
-	> *:not(:last-child) {
-		border-right: 1px solid var(--accent-color-ghost) !important;
-	}
-
 	> * {
+		border: 1px solid var(--accent-color-ghost) !important;
 		flex-grow: 1;
 	}
 }
