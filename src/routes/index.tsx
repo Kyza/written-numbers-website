@@ -47,7 +47,7 @@ function randomNumber(length: number): string {
 }
 
 export function routeData(props: RouteDataArgs) {
-	return props.location.query.number ?? randomNumber(100);
+	return props.location.query.number;
 }
 
 function isSafeExpression(expression: string): boolean {
@@ -68,8 +68,9 @@ export default (function Home() {
 		"expression",
 		() => expression().toString(),
 		(value) => expression(value),
-		untrack(() => expression()),
-		true
+		untrack(() => expression() ?? randomNumber(100)),
+		// Only override if there was no query string.
+		expression() != null ? true : false
 	);
 
 	const userIsSafe = createCrossSignal(isSafeExpression(expression()));
