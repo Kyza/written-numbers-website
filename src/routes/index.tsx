@@ -131,7 +131,6 @@ export default (function Home() {
 				ordinal: ordinal(),
 			};
 			const stringData = JSON.stringify(data);
-			console.log(stringData);
 
 			if (cache.has(stringData)) {
 				return cache.get(stringData);
