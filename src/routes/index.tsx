@@ -68,7 +68,8 @@ export default (function Home() {
 		"expression",
 		() => expression().toString(),
 		(value) => expression(value),
-		untrack(() => expression())
+		untrack(() => expression()),
+		true
 	);
 
 	const userIsSafe = createCrossSignal(isSafeExpression(expression()));

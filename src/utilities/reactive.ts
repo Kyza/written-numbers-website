@@ -43,9 +43,16 @@ export function connectLocalStorage(
 	key: string,
 	get: () => string,
 	set: (value: string) => any,
-	defaultValue: string
+	defaultValue: string,
+	defaultOverwrite?: boolean
 ) {
-	set(!isServer ? localStorage.getItem(key) ?? defaultValue : defaultValue);
+	if (defaultOverwrite) {
+		set(defaultValue);
+	} else {
+		set(
+			!isServer ? localStorage.getItem(key) ?? defaultValue : defaultValue
+		);
+	}
 	createEffect(() => {
 		localStorage.setItem(key, get());
 	});
