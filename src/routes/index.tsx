@@ -48,6 +48,13 @@ function randomNumber(length: number): string {
 	return trimStart(result, "0").padEnd(1, "0");
 }
 
+function fixedEncodeURIComponent(str: string): string {
+	return encodeURIComponent(str).replace(
+		/[!'()*]/g,
+		(c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`
+	);
+}
+
 export function routeData(props: RouteDataArgs) {
 	return props.location.query.number;
 }
@@ -165,7 +172,7 @@ export default (function Home() {
 	});
 
 	createEffect(() => {
-		navigate(`/?number=${encodeURIComponent(expression())}`, {
+		navigate(`/?number=${fixedEncodeURIComponent(expression())}`, {
 			replace: true,
 		});
 		if (
