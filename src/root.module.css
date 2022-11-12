@@ -27,6 +27,8 @@ html {
 *,
 *::before,
 *::after {
+	border-collapse: collapse !important;
+
 	box-sizing: border-box;
 	font-family: "Mukta", sans-serif;
 }
@@ -74,7 +76,8 @@ body {
 label {
 	color: var(--text-color);
 	background-color: var(--background-primary);
-	border: none;
+	border: 1px solid var(--accent-color-ghost);
+	border-radius: 0.25rem;
 
 	span {
 		vertical-align: middle;
@@ -91,7 +94,8 @@ input,
 textarea {
 	color: var(--text-color);
 	background-color: var(--background-primary);
-	border: none;
+	border: 1px solid var(--accent-color-ghost);
+	border-radius: 0.25rem;
 
 	text-align: center;
 }
@@ -103,7 +107,8 @@ input[type="button"] {
 	}
 
 	background-color: var(--background-primary);
-	border: none;
+	border: 1px solid var(--accent-color-ghost);
+	border-radius: 0.25rem;
 
 	color: var(--text-color);
 

@@ -1,8 +1,15 @@
-import { Component, createEffect, createResource, Show } from "solid-js";
+import {
+	Component,
+	createEffect,
+	createResource,
+	Show,
+	untrack,
+} from "solid-js";
 import { isServer } from "solid-js/web";
 import { RouteDataArgs, useNavigate, useRouteData } from "solid-start";
 import LoadingText from "~/components/LoadingText";
 import {
+	connectLocalStorage,
 	createCancellableEffect,
 	createCrossSignal,
 } from "~/utilities/reactive";
@@ -52,12 +59,19 @@ const cache = new Map<string, string>();
 let lastWorker: Worker;
 
 export default (function Home() {
-	const expr = useRouteData<typeof routeData>();
+	const routeExpression = useRouteData<typeof routeData>();
 	const navigate = useNavigate();
 
-	const numberExpression = createCrossSignal(expr);
+	const expression = createCrossSignal(routeExpression);
 
-	const userIsSafe = createCrossSignal(isSafeExpression(numberExpression()));
+	connectLocalStorage(
+		"expression",
+		() => expression().toString(),
+		(value) => expression(value),
+		untrack(() => expression())
+	);
+
+	const userIsSafe = createCrossSignal(isSafeExpression(expression()));
 	const userConfirmedRun = createCrossSignal(false);
 
 	const minRandom = createCrossSignal(1);
@@ -66,11 +80,42 @@ export default (function Home() {
 	const and = createCrossSignal(false);
 	const commas = createCrossSignal(false);
 
+	connectLocalStorage(
+		"minRandom",
+		() => minRandom().toString(),
+		(value) => minRandom(parseInt(value)),
+		untrack(() => minRandom().toString())
+	);
+	connectLocalStorage(
+		"maxRandom",
+		() => maxRandom().toString(),
+		(value) => maxRandom(parseInt(value)),
+		untrack(() => maxRandom().toString())
+	);
+	connectLocalStorage(
+		"ordinal",
+		() => ordinal().toString(),
+		(value) => ordinal(value === "true" ? true : false),
+		untrack(() => ordinal().toString())
+	);
+	connectLocalStorage(
+		"and",
+		() => and().toString(),
+		(value) => and(value === "true" ? true : false),
+		untrack(() => and().toString())
+	);
+	connectLocalStorage(
+		"commas",
+		() => commas().toString(),
+		(value) => commas(value === "true" ? true : false),
+		untrack(() => commas().toString())
+	);
+
 	const [numberWords, { refetch: recalculateWords }] =
 		createResource<string>(async () => {
 			if (isServer) return "Loading...";
 			const data: MessageData = {
-				expression: numberExpression(),
+				expression: expression(),
 				and: and(),
 				commas: commas(),
 				ordinal: ordinal(),
@@ -85,12 +130,12 @@ export default (function Home() {
 				lastWorker = worker;
 
 				worker.onmessage = (message) => {
-					cache.set(numberExpression(), message.data);
+					cache.set(expression(), message.data);
 					resolve(message.data);
 				};
 
 				worker.onerror = (error) => {
-					cache.set(numberExpression(), error.message);
+					cache.set(expression(), error.message);
 					resolve(error.message);
 				};
 
@@ -100,11 +145,11 @@ export default (function Home() {
 
 	createCancellableEffect((cancel) => {
 		if (userConfirmedRun()) cancel();
-		userIsSafe(isSafeExpression(numberExpression()));
+		userIsSafe(isSafeExpression(expression()));
 	});
 
 	createEffect(() => {
-		navigate(`/?number=${encodeURIComponent(numberExpression())}`, {
+		navigate(`/?number=${encodeURIComponent(expression())}`, {
 			replace: true,
 		});
 		if (userIsSafe() || userConfirmedRun()) {
@@ -115,22 +160,22 @@ export default (function Home() {
 	return (
 		<main class={rootStyles.content}>
 			<div class={styles.controlsWrapper}>
-				<div class={styles.controlGroup}>
+				<div class={styles.controlColumn}>
 					<input
 						type="text"
 						class={styles.expressionBox}
-						value={numberExpression()}
+						value={expression()}
 						oninput={(e) => {
-							numberExpression(e.currentTarget.value);
+							expression(e.currentTarget.value);
 						}}
 					/>
 				</div>
-				<div class={styles.controlWrapGroup}>
+				<div class={styles.controlColumn}>
 					<div class={styles.controlGroup}>
 						<input
 							type="button"
 							onclick={() => {
-								numberExpression(
+								expression(
 									randomNumber(randomRange(minRandom(), maxRandom()))
 								);
 							}}
@@ -138,9 +183,9 @@ export default (function Home() {
 						/>
 					</div>
 					<div class={styles.controlGroup}>
-						<span>Min Digits: </span>
+						<label for="minimum">Min Digits: </label>
 						<input
-							name="Minimum"
+							id="minimum"
 							type="number"
 							oninput={(e) => {
 								minRandom(e.currentTarget.valueAsNumber);
@@ -151,9 +196,9 @@ export default (function Home() {
 						/>
 					</div>
 					<div class={styles.controlGroup}>
-						<span>Max Digits: </span>
+						<label for="maximum">Max Digits: </label>
 						<input
-							name="Maximum"
+							id="maximum"
 							type="number"
 							oninput={(e) => {
 								maxRandom(e.currentTarget.valueAsNumber);
@@ -199,7 +244,7 @@ export default (function Home() {
 						<input
 							type="button"
 							onclick={() => {
-								numberExpression("0");
+								expression("0");
 								navigate(`/`, {
 									replace: true,
 								});

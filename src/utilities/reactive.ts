@@ -8,6 +8,7 @@ import {
 	ResourceActions,
 	Setter,
 } from "solid-js";
+import { isServer } from "solid-js/web";
 
 export type CrossSignal<A> = Accessor<A> & Setter<A>;
 export type CrossResource<A> = CrossSignal<A> & ResourceActions<A>;
@@ -35,6 +36,18 @@ export function createCancellableEffect(fn: (dispose: Function) => any) {
 		createEffect(() => {
 			fn(dispose);
 		});
+	});
+}
+
+export function connectLocalStorage(
+	key: string,
+	get: () => string,
+	set: (value: string) => any,
+	defaultValue: string
+) {
+	set(!isServer ? localStorage.getItem(key) ?? defaultValue : defaultValue);
+	createEffect(() => {
+		localStorage.setItem(key, get());
 	});
 }
 
