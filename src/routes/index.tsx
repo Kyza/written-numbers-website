@@ -16,6 +16,7 @@ import {
 
 import WordWorker from "~/workers/WordWorker.ts?worker";
 
+import { createStore } from "solid-js/store";
 import CopyrightText from "~/components/CopyrightText";
 import ThemeButton from "~/components/ThemeButton";
 import rootStyles from "~/root.module.css";
@@ -76,7 +77,10 @@ export default (function Home() {
 	);
 
 	const expressionSafety = createCrossSignal(isSafeExpression(expression()));
-	const userConfirmedRun = createCrossSignal(false);
+	const [userConfirmedRuns, setUserConfirmedRuns] = createStore({
+		script: false,
+		length: false,
+	});
 
 	const minRandom = createCrossSignal(1);
 	const maxRandom = createCrossSignal(1000);
@@ -148,7 +152,11 @@ export default (function Home() {
 		});
 
 	createCancellableEffect((cancel) => {
-		if (userConfirmedRun()) cancel();
+		if (userConfirmedRuns.script) cancel();
+		expressionSafety(isSafeExpression(expression()));
+	});
+	createCancellableEffect((cancel) => {
+		if (userConfirmedRuns.length) cancel();
 		expressionSafety(isSafeExpression(expression()));
 	});
 
@@ -156,7 +164,14 @@ export default (function Home() {
 		navigate(`/?number=${encodeURIComponent(expression())}`, {
 			replace: true,
 		});
-		if (expressionSafety() || userConfirmedRun()) {
+		if (
+			// Explicitly check true since strings are truthy.
+			expressionSafety() === true ||
+			(typeof expressionSafety() === "string" &&
+				userConfirmedRuns[expressionSafety() as string])
+		) {
+			console.log(expressionSafety(), userConfirmedRuns);
+
 			recalculateWords();
 		}
 	});
@@ -263,9 +278,14 @@ export default (function Home() {
 			</div>
 			<article class={styles.words}>
 				<Show
-					when={expressionSafety() === "length" && !userConfirmedRun()}
+					when={
+						expressionSafety() === "length" && !userConfirmedRuns.length
+					}
 				>
-					<p>This is very long number.</p>
+					<p>
+						This is very long number of the length{" "}
+						{expression().length.toLocaleString()}.
+					</p>
 					<p>
 						It could potentially take a very long time, use high CPU,
 						and freeze the tab.
@@ -274,19 +294,32 @@ export default (function Home() {
 					<button
 						class={styles.button}
 						onclick={() => {
-							userConfirmedRun(true);
+							setUserConfirmedRuns("length", true);
 						}}
 					>
 						Run The Number
 					</button>
+					<button
+						class={styles.button}
+						onclick={() => {
+							expression("0");
+						}}
+					>
+						Clear
+					</button>
 				</Show>
 				<Show
-					when={expressionSafety() === "script" && !userConfirmedRun()}
+					when={
+						expressionSafety() === "script" && !userConfirmedRuns.script
+					}
 				>
 					<p>The expression is not a basic number.</p>
 					<p>
 						It's evaluated with JavaScript and could be potentially
-						<strong>dangerous</strong> if someone sent it to you.
+						<strong>
+							<i> dangerous</i>
+						</strong>{" "}
+						if someone sent it to you.
 					</p>
 					<p>
 						It could potentially take a very long time, use high CPU,
@@ -296,13 +329,27 @@ export default (function Home() {
 					<button
 						class={styles.button}
 						onclick={() => {
-							userConfirmedRun(true);
+							setUserConfirmedRuns("script", true);
 						}}
 					>
 						Run The Code
 					</button>
+					<button
+						class={styles.button}
+						onclick={() => {
+							expression("0");
+						}}
+					>
+						Clear
+					</button>
 				</Show>
-				<Show when={expressionSafety() === true || userConfirmedRun()}>
+				<Show
+					when={
+						expressionSafety() === true ||
+						(typeof expressionSafety() === "string" &&
+							userConfirmedRuns[expressionSafety() as string])
+					}
+				>
 					<p>
 						<Show
 							when={!numberWords.loading}
