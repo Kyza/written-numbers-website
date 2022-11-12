@@ -82,6 +82,8 @@ export default (function Home() {
 		length: false,
 	});
 
+	const copying = createCrossSignal(false);
+
 	const minRandom = createCrossSignal(1);
 	const maxRandom = createCrossSignal(1000);
 	const ordinal = createCrossSignal(false);
@@ -268,6 +270,22 @@ export default (function Home() {
 							}}
 							value="Clear"
 						/>
+					</div>
+					<div class={styles.controlGroup}>
+						<button
+							onclick={async () => {
+								copying(true);
+								await navigator.clipboard.writeText(numberWords());
+								copying(false);
+							}}
+							disabled={copying()}
+						>
+							{copying() ? (
+								<LoadingText text="Copying" />
+							) : (
+								"Copy Result"
+							)}
+						</button>
 					</div>
 					<div class={styles.controlGroup}>
 						<ThemeButton />
