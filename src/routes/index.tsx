@@ -124,6 +124,8 @@ export default (function Home() {
 	const [numberWords, { refetch: recalculateWords }] =
 		createResource<string>(async () => {
 			if (isServer) return "Loading...";
+			if (lastWorker) lastWorker.terminate();
+
 			const data: MessageData = {
 				expression: expression(),
 				and: and(),
@@ -136,7 +138,6 @@ export default (function Home() {
 				return cache.get(stringData);
 			}
 			return new Promise((resolve) => {
-				if (lastWorker) lastWorker.terminate();
 				const worker = new WordWorker();
 				lastWorker = worker;
 
