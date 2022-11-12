@@ -1,8 +1,13 @@
 import { toOrdinal, toWords } from "written-numbers/src/index";
 import { WordOptions } from "written-numbers/src/toWords";
 
+export type MessageData = WordOptions & {
+	expression: string;
+	ordinal: boolean;
+};
+
 onmessage = (message) => {
-	const { data } = message;
+	const data: MessageData = message.data;
 	console.log("data", data);
 
 	const expression =
@@ -20,8 +25,12 @@ onmessage = (message) => {
 	}
 	console.log(evaluated);
 
-	const words = toWords(evaluated, data as WordOptions);
+	let words = toWords(evaluated, data);
 	console.log(words);
+
+	if (data.ordinal) {
+		words = toOrdinal(words);
+	}
 
 	postMessage(words);
 };

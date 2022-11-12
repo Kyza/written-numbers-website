@@ -12,6 +12,7 @@ import WordWorker from "~/workers/WordWorker.ts?worker";
 import CopyrightText from "~/components/CopyrightText";
 import ThemeButton from "~/components/ThemeButton";
 import rootStyles from "~/root.module.css";
+import { MessageData } from "~/workers/WordWorker";
 import styles from "./index.module.css";
 
 function trimStart(str: string, character: string): string {
@@ -59,16 +60,20 @@ export default (function Home() {
 	const userIsSafe = createCrossSignal(isSafeExpression(numberExpression()));
 	const userConfirmedRun = createCrossSignal(false);
 
+	const minRandom = createCrossSignal(1);
+	const maxRandom = createCrossSignal(1000);
+	const ordinal = createCrossSignal(false);
 	const and = createCrossSignal(false);
 	const commas = createCrossSignal(false);
 
 	const [numberWords, { refetch: recalculateWords }] =
 		createResource<string>(async () => {
 			if (isServer) return "Loading...";
-			const data = {
+			const data: MessageData = {
 				expression: numberExpression(),
 				and: and(),
 				commas: commas(),
+				ordinal: ordinal(),
 			};
 			const stringData = JSON.stringify(data);
 			if (cache.has(stringData)) {
@@ -107,78 +112,104 @@ export default (function Home() {
 		}
 	});
 
-	const minRandom = createCrossSignal(1);
-	const maxRandom = createCrossSignal(1000);
-
 	return (
 		<main class={rootStyles.content}>
 			<div class={styles.controlsWrapper}>
-				<input
-					type="text"
-					class={styles.expressionBox}
-					value={numberExpression()}
-					oninput={(e) => {
-						numberExpression(e.currentTarget.value);
-					}}
-				/>
 				<div class={styles.controlGroup}>
 					<input
-						type="button"
-						onclick={() => {
-							numberExpression(
-								randomNumber(randomRange(minRandom(), maxRandom()))
-							);
-						}}
-						value="Random Number"
-					/>
-					<input
-						name="Minimum"
-						type="number"
+						type="text"
+						class={styles.expressionBox}
+						value={numberExpression()}
 						oninput={(e) => {
-							minRandom(e.currentTarget.valueAsNumber);
+							numberExpression(e.currentTarget.value);
 						}}
-						min={1}
-						max={maxRandom()}
-						value={minRandom()}
 					/>
-					<input
-						name="Maximum"
-						type="number"
-						oninput={(e) => {
-							maxRandom(e.currentTarget.valueAsNumber);
-						}}
-						min={minRandom()}
-						value={maxRandom()}
-					/>
-					<button
-						onclick={() => {
-							and(!and());
-							recalculateWords();
-						}}
-					>
-						<input type="checkbox" checked={and()} />
-						Hundred And
-					</button>
-					<button
-						onclick={() => {
-							commas(!commas());
-							recalculateWords();
-						}}
-					>
-						<input type="checkbox" checked={commas()} />
-						Commas
-					</button>
-					<input
-						type="button"
-						onclick={() => {
-							numberExpression("0");
-							navigate(`/`, {
-								replace: true,
-							});
-						}}
-						value="Clear"
-					/>
-					<ThemeButton />
+				</div>
+				<div class={styles.controlWrapGroup}>
+					<div class={styles.controlGroup}>
+						<input
+							type="button"
+							onclick={() => {
+								numberExpression(
+									randomNumber(randomRange(minRandom(), maxRandom()))
+								);
+							}}
+							value="Random Number (by digit length)"
+						/>
+					</div>
+					<div class={styles.controlGroup}>
+						<span>Min Digits: </span>
+						<input
+							name="Minimum"
+							type="number"
+							oninput={(e) => {
+								minRandom(e.currentTarget.valueAsNumber);
+							}}
+							min={1}
+							max={maxRandom()}
+							value={minRandom()}
+						/>
+					</div>
+					<div class={styles.controlGroup}>
+						<span>Max Digits: </span>
+						<input
+							name="Maximum"
+							type="number"
+							oninput={(e) => {
+								maxRandom(e.currentTarget.valueAsNumber);
+							}}
+							min={minRandom()}
+							value={maxRandom()}
+						/>
+					</div>
+					<div class={styles.controlGroup}>
+						<button
+							onclick={() => {
+								ordinal(!ordinal());
+								recalculateWords();
+							}}
+						>
+							<input type="checkbox" checked={ordinal()} />
+							<span>Ordinal</span>
+						</button>
+					</div>
+					<div class={styles.controlGroup}>
+						<button
+							onclick={() => {
+								and(!and());
+								recalculateWords();
+							}}
+						>
+							<input type="checkbox" checked={and()} />
+							<span>Hundred And</span>
+						</button>
+					</div>
+					<div class={styles.controlGroup}>
+						<button
+							onclick={() => {
+								commas(!commas());
+								recalculateWords();
+							}}
+						>
+							<input type="checkbox" checked={commas()} />
+							<span>Commas</span>
+						</button>
+					</div>
+					<div class={styles.controlGroup}>
+						<input
+							type="button"
+							onclick={() => {
+								numberExpression("0");
+								navigate(`/`, {
+									replace: true,
+								});
+							}}
+							value="Clear"
+						/>
+					</div>
+					<div class={styles.controlGroup}>
+						<ThemeButton />
+					</div>
 				</div>
 			</div>
 			<article class={styles.words}>
