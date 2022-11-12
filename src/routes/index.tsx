@@ -36,12 +36,13 @@ function randomRange(min: number, max: number): number {
 
 function randomNumber(length: number): string {
 	let result = "";
-	const characters = "0123456789";
+	let characters = "123456789";
 	const charactersLength = characters.length;
 	for (let i = 0; i < length; i++) {
 		result += characters.charAt(
 			Math.floor(Math.random() * charactersLength)
 		);
+		if (i === 0) characters += "0";
 	}
 	return trimStart(result, "0").padEnd(1, "0");
 }
@@ -50,8 +51,9 @@ export function routeData(props: RouteDataArgs) {
 	return props.location.query.number;
 }
 
-function isSafeExpression(expression: string): boolean {
-	if (isNaN(Number(expression))) return false;
+function isSafeExpression(expression: string): true | "script" | "length" {
+	if (expression.length > 1000) return "length";
+	if (isNaN(Number(expression))) return "script";
 	return true;
 }
 
@@ -73,7 +75,7 @@ export default (function Home() {
 		expression() != null ? true : false
 	);
 
-	const userIsSafe = createCrossSignal(isSafeExpression(expression()));
+	const expressionSafety = createCrossSignal(isSafeExpression(expression()));
 	const userConfirmedRun = createCrossSignal(false);
 
 	const minRandom = createCrossSignal(1);
@@ -147,14 +149,14 @@ export default (function Home() {
 
 	createCancellableEffect((cancel) => {
 		if (userConfirmedRun()) cancel();
-		userIsSafe(isSafeExpression(expression()));
+		expressionSafety(isSafeExpression(expression()));
 	});
 
 	createEffect(() => {
 		navigate(`/?number=${encodeURIComponent(expression())}`, {
 			replace: true,
 		});
-		if (userIsSafe() || userConfirmedRun()) {
+		if (expressionSafety() || userConfirmedRun()) {
 			recalculateWords();
 		}
 	});
@@ -260,11 +262,35 @@ export default (function Home() {
 				</div>
 			</div>
 			<article class={styles.words}>
-				<Show when={!userIsSafe() && !userConfirmedRun()}>
+				<Show
+					when={expressionSafety() === "length" && !userConfirmedRun()}
+				>
+					<p>This is very long number.</p>
+					<p>
+						It could potentially take a very long time, use high CPU,
+						and freeze the tab.
+					</p>
+					<p>Are you sure you want to run it?</p>
+					<button
+						class={styles.button}
+						onclick={() => {
+							userConfirmedRun(true);
+						}}
+					>
+						Run The Number
+					</button>
+				</Show>
+				<Show
+					when={expressionSafety() === "script" && !userConfirmedRun()}
+				>
 					<p>The expression is not a basic number.</p>
 					<p>
-						The expression is evaluated with JavaScript and could be
-						potentially dangerous if someone sent it to you.
+						It's evaluated with JavaScript and could be potentially
+						<strong>dangerous</strong> if someone sent it to you.
+					</p>
+					<p>
+						It could potentially take a very long time, use high CPU,
+						and freeze the tab.
 					</p>
 					<p>Are you sure you want to run it?</p>
 					<button
@@ -276,7 +302,7 @@ export default (function Home() {
 						Run The Code
 					</button>
 				</Show>
-				<Show when={userIsSafe() || userConfirmedRun()}>
+				<Show when={expressionSafety() === true || userConfirmedRun()}>
 					<p>
 						<Show
 							when={!numberWords.loading}
