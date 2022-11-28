@@ -1,5 +1,18 @@
-import { toOrdinal, toWords } from "written-numbers/src/index";
-import { WordOptions } from "written-numbers/src/toWords";
+import {
+	combineIllionParts,
+	constants,
+	getIllionPartNumbers,
+	getIllionParts,
+	hundreds,
+	illions,
+	illionWord,
+	ones,
+	tens,
+	thousands,
+	toOrdinal,
+	toWords,
+} from "written-numbers";
+import { WordOptions } from "written-numbers/dist/toWords";
 
 export type MessageData = WordOptions & {
 	expression: string;
@@ -19,15 +32,43 @@ onmessage = (message) => {
 		evaluated = new Function(
 			"toWords",
 			"toOrdinal",
+			"combineIllionParts",
+			"constants",
+			"getIllionPartNumbers",
+			"getIllionParts",
+			"hundreds",
+			"illions",
+			"illionWord",
+			"ones",
+			"tens",
+			"thousands",
 			`return ${expression}`
-		)(toWords, toOrdinal);
+		)(
+			toWords,
+			toOrdinal,
+			combineIllionParts,
+			constants,
+			getIllionPartNumbers,
+			getIllionParts,
+			hundreds,
+			illions,
+			illionWord,
+			ones,
+			tens,
+			thousands
+		);
 	}
 
-	let words = toWords(evaluated, data);
+	try {
+		let words = toWords(evaluated, data);
 
-	if (data.ordinal) {
-		words = toOrdinal(words);
+		if (data.ordinal) {
+			words = toOrdinal(words);
+		}
+
+		postMessage(words);
+	} catch (e) {
+		if (e.message === "Invalid number format.") postMessage(evaluated);
+		else throw e;
 	}
-
-	postMessage(words);
 };

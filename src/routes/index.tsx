@@ -17,6 +17,7 @@ import {
 import WordWorker from "~/workers/WordWorker.ts?worker";
 
 import { createStore } from "solid-js/store";
+import ClientOnly from "~/components/ClientOnly";
 import CopyrightText from "~/components/CopyrightText";
 import ThemeButton from "~/components/ThemeButton";
 import rootStyles from "~/root.module.css";
@@ -289,11 +290,10 @@ export default (function Home() {
 							}}
 							disabled={copying()}
 						>
-							{copying() ? (
+							<Show when={copying()}>
 								<LoadingText text="Copying" />
-							) : (
-								"Copy Result"
-							)}
+							</Show>
+							<Show when={!copying()}>Copy Result</Show>
 						</button>
 					</div>
 					<div class={styles.controlGroup}>
@@ -368,7 +368,7 @@ export default (function Home() {
 						Clear
 					</button>
 				</Show>
-				<Show when={!isServer}>
+				<ClientOnly>
 					<Show
 						when={
 							expressionSafety() === true ||
@@ -385,7 +385,7 @@ export default (function Home() {
 							</Show>
 						</p>
 					</Show>
-				</Show>
+				</ClientOnly>
 			</article>
 			<p>
 				<CopyrightText />
