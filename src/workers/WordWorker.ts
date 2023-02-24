@@ -26,8 +26,7 @@ onmessage = async (message) => {
 	await init();
 
 	const { options, languageOptions }: MessageData = message.data;
-	const expression =
-		message.data.expression.length > 0 ? message.data.expression : "0";
+	const expression = message.data.expression.toString();
 
 	let evaluated: string;
 	if (/^(-?\d+)(\.\d+)?$/.test(expression)) {
