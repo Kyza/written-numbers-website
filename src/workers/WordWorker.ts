@@ -32,7 +32,12 @@ onmessage = async (message) => {
 	if (/^(-?\d+)(\.\d+)?$/.test(expression)) {
 		evaluated = expression;
 	} else {
-		evaluated = new Function("toWords", `return ${expression}`)(toWords);
+		try {
+			evaluated = new Function("toWords", `return ${expression}`)(toWords);
+		} catch (e) {
+			postMessage(e.toString());
+			return;
+		}
 	}
 
 	try {
@@ -50,6 +55,6 @@ onmessage = async (message) => {
 		postMessage(words);
 	} catch (e) {
 		if (e.message === "Invalid number format.") postMessage(evaluated);
-		else throw e;
+		else postMessage(e.toString());
 	}
 };
