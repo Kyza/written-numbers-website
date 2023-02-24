@@ -30,7 +30,7 @@ onmessage = async (message) => {
 		message.data.expression.length > 0 ? message.data.expression : "0";
 
 	let evaluated: string;
-	if (/^\-?\d+$/.test(expression)) {
+	if (/^(-?\d+)(\.\d+)?$/.test(expression)) {
 		evaluated = expression;
 	} else {
 		evaluated = new Function("toWords", `return ${expression}`)(toWords);

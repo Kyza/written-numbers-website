@@ -56,7 +56,7 @@ export function routeData(props: RouteDataArgs) {
 
 function isSafeExpression(expression: string): true | "script" | "length" {
 	if (expression.length > 1000) return "length";
-	if (isNaN(Number(expression))) return "script";
+	if (!/^(-?\d+)(\.\d+)?$/.test(expression)) return "script";
 	return true;
 }
 
