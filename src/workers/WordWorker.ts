@@ -47,7 +47,7 @@ onmessage = async (message) => {
 		});
 		console.timeEnd("Converted to words");
 
-		console.log("Sent words");
+		console.log("Sent words.");
 		postMessage(words);
 	} catch (e) {
 		if (e.message === "Invalid number format.") postMessage(evaluated);
