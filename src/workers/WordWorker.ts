@@ -1,71 +1,53 @@
-import {
-	combineIllionParts,
-	constants,
-	getIllionPartNumbers,
-	getIllionParts,
-	hundreds,
-	illions,
-	illionWord,
-	ones,
-	tens,
-	thousands,
-	toOrdinal,
+import initWrittenWords, {
+	LanguageOptions,
+	Options,
+	ValidNumber,
 	toWords,
 } from "written-numbers";
-import { WordOptions } from "written-numbers/dist/toWords";
+import wasm from "written-numbers/dist/wasm/written_numbers_wasm_bg.wasm?url";
 
-export type MessageData = WordOptions & {
-	expression: string;
-	ordinal: boolean;
+export type MessageData = {
+	expression: ValidNumber;
+	options: Options;
+	languageOptions: LanguageOptions;
 };
 
-onmessage = (message) => {
-	const data: MessageData = message.data;
+let didInit = false;
+async function init() {
+	if (!didInit) {
+		console.time("Initialized WASM");
+		await initWrittenWords(wasm);
+		console.timeEnd("Initialized WASM");
+		didInit = true;
+	}
+}
 
+onmessage = async (message) => {
+	await init();
+
+	const { options, languageOptions }: MessageData = message.data;
 	const expression =
 		message.data.expression.length > 0 ? message.data.expression : "0";
 
 	let evaluated: string;
-	if (/^\d+$/.test(expression)) {
+	if (/^\-?\d+$/.test(expression)) {
 		evaluated = expression;
 	} else {
-		evaluated = new Function(
-			"toWords",
-			"toOrdinal",
-			"combineIllionParts",
-			"constants",
-			"getIllionPartNumbers",
-			"getIllionParts",
-			"hundreds",
-			"illions",
-			"illionWord",
-			"ones",
-			"tens",
-			"thousands",
-			`return ${expression}`
-		)(
-			toWords,
-			toOrdinal,
-			combineIllionParts,
-			constants,
-			getIllionPartNumbers,
-			getIllionParts,
-			hundreds,
-			illions,
-			illionWord,
-			ones,
-			tens,
-			thousands
-		);
+		evaluated = new Function("toWords", `return ${expression}`)(toWords);
 	}
 
 	try {
-		let words = toWords(evaluated, data);
+		console.log("Received number.");
 
-		if (data.ordinal) {
-			words = toOrdinal(words);
-		}
+		console.time("Converted to words");
+		let words = toWords({
+			number: evaluated,
+			options,
+			languageOptions,
+		});
+		console.timeEnd("Converted to words");
 
+		console.log("Sent words");
 		postMessage(words);
 	} catch (e) {
 		if (e.message === "Invalid number format.") postMessage(evaluated);

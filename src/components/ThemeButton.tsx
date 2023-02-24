@@ -18,8 +18,6 @@ const ThemeButton: Component = () => {
 						theme("light");
 						break;
 					case "light":
-						theme("auto");
-						break;
 					default:
 						theme("auto");
 						break;

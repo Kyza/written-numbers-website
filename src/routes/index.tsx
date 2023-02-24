@@ -1,10 +1,4 @@
-import {
-	Component,
-	createEffect,
-	createResource,
-	Show,
-	untrack,
-} from "solid-js";
+import { batch, Component, createEffect, Show, untrack } from "solid-js";
 import { isServer } from "solid-js/web";
 import { RouteDataArgs, useNavigate, useRouteData } from "solid-start";
 import LoadingText from "~/components/LoadingText";
@@ -67,7 +61,7 @@ function isSafeExpression(expression: string): true | "script" | "length" {
 }
 
 const cache = new Map<string, string>();
-let lastWorker: Worker;
+let worker: Worker = null;
 
 export default (function Home() {
 	const routeExpression = useRouteData<typeof routeData>();
@@ -129,39 +123,67 @@ export default (function Home() {
 		untrack(() => commas().toString())
 	);
 
-	const [numberWords, { refetch: recalculateWords }] =
-		createResource<string>(async () => {
-			if (isServer) return "Loading...";
-			if (lastWorker) lastWorker.terminate();
+	const [numberWords, setNumberWords] = createStore({
+		words: null,
+		loading: true,
+	});
+	async function recalculateWords() {
+		if (isServer) return "Loading...";
 
-			const data: MessageData = {
-				expression: expression(),
-				and: and(),
+		console.groupEnd();
+		console.group("Calculation:");
+
+		if (untrack(() => numberWords.loading)) {
+			if (worker) {
+				worker.terminate();
+				console.log("Killed previous WASM Worker.");
+			}
+
+			worker = new WordWorker();
+		}
+		setNumberWords("loading", true);
+
+		const data: MessageData = {
+			expression: expression(),
+			options: { language: "en" },
+			languageOptions: {
+				hundred_and: and(),
 				commas: commas(),
 				ordinal: ordinal(),
-			};
-			const stringData = JSON.stringify(data);
+			},
+		};
+		const stringData = JSON.stringify(data);
 
-			if (cache.has(stringData)) {
-				return cache.get(stringData);
-			}
-			return new Promise((resolve) => {
-				const worker = new WordWorker();
-				lastWorker = worker;
+		if (cache.has(stringData)) {
+			console.log("Used cached value.");
 
-				worker.onmessage = (message) => {
-					cache.set(stringData, message.data);
-					resolve(message.data);
-				};
+			setNumberWords("words", cache.get(stringData));
+			setNumberWords("loading", false);
+			return;
+		}
 
-				worker.onerror = (error) => {
-					cache.set(stringData, error.message);
-					resolve(error.message);
-				};
+		worker.onmessage = (message) => {
+			cache.set(stringData, message.data);
+			console.log("Received words.");
+			console.groupEnd();
 
-				worker.postMessage(data);
+			batch(() => {
+				setNumberWords("loading", false);
+				setNumberWords("words", message.data);
 			});
-		});
+		};
+
+		worker.onerror = (error) => {
+			cache.set(stringData, error.message);
+			console.log("Received error.");
+			console.error(error);
+			console.groupEnd();
+
+			setNumberWords("words", error.message);
+		};
+
+		worker.postMessage(data);
+	}
 
 	createCancellableEffect((cancel) => {
 		if (userConfirmedRuns.script) cancel();
@@ -285,7 +307,9 @@ export default (function Home() {
 						<button
 							onclick={async () => {
 								copying(true);
-								await navigator.clipboard.writeText(numberWords());
+								await navigator.clipboard.writeText(
+									numberWords.words
+								);
 								copying(false);
 							}}
 							disabled={copying()}
@@ -381,7 +405,7 @@ export default (function Home() {
 								when={!numberWords.loading}
 								fallback={<LoadingText text="Calculating" />}
 							>
-								{numberWords()}
+								{numberWords.words}
 							</Show>
 						</p>
 					</Show>
