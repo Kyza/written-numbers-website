@@ -18,6 +18,8 @@ import rootStyles from "~/root.module.css";
 import { MessageData } from "~/workers/WordWorker";
 import styles from "./index.module.css";
 
+import digit from "~/pomsky/digit.pom";
+
 function trimStart(str: string, character: string): string {
 	let i = 0;
 	for (; i < str.length; i++) {
@@ -56,7 +58,7 @@ export function routeData(props: RouteDataArgs) {
 
 function isSafeExpression(expression: string): true | "script" | "length" {
 	if (expression.length > 1000) return "length";
-	if (!/^(-?\d+)(\.\d+)?$/.test(expression)) return "script";
+	if (!digit().test(expression)) return "script";
 	return true;
 }
 

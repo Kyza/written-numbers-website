@@ -5,6 +5,7 @@ import initWrittenWords, {
 	toWords,
 } from "written-numbers";
 import wasm from "written-numbers/dist/wasm/written_numbers_wasm_bg.wasm?url";
+import digit from "~/pomsky/digit.pom";
 
 export type MessageData = {
 	expression: ValidNumber;
@@ -29,7 +30,7 @@ onmessage = async (message) => {
 	const expression = message.data.expression.toString();
 
 	let evaluated: string;
-	if (/^(-?\d+)(\.\d+)?$/.test(expression)) {
+	if (digit().test(expression)) {
 		evaluated = expression;
 	} else {
 		try {
