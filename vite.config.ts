@@ -13,22 +13,4 @@ export default {
 			includeOriginal: false,
 		}),
 	],
-	build: {
-		rollupOptions: {
-			plugins: [
-				pomsky.rollup({
-					flavor: "js",
-					includeOriginal: false,
-				}),
-			],
-		},
-	},
-	// worker: {
-	// 	plugins: [
-	// 		pomsky.vite({
-	// 			flavor: "js",
-	// 			includeOriginal: false,
-	// 		}),
-	// 	],
-	// },
 } as UserConfigExport;
