@@ -13,6 +13,14 @@ export default {
 			includeOriginal: false,
 		}),
 	],
+	worker: {
+		plugins: [
+			pomsky.vite({
+				flavor: "js",
+				includeOriginal: false,
+			}),
+		],
+	},
 	// build: {
 	// 	rollupOptions: {
 	// 		plugins: [
@@ -23,4 +31,4 @@ export default {
 	// 		],
 	// 	},
 	// },
-} as UserConfigExport;
+} as unknown as UserConfigExport;
