@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@pomsky-lang/unplugin': ^1.2.8
   '@solidjs/meta': ^0.28.2
-  '@solidjs/router': ^0.5.1
+  '@solidjs/router': ^0.8.0
   '@types/markdown-it': ^12.2.3
   '@types/node': ^18.15.0
   autoprefixer: ^10.4.14
@@ -30,10 +30,10 @@ specifiers:
 dependencies:
   '@pomsky-lang/unplugin': 1.2.8
   '@solidjs/meta': 0.28.2_solid-js@1.6.13
-  '@solidjs/router': 0.5.1_solid-js@1.6.13
+  '@solidjs/router': 0.8.0_solid-js@1.6.13
   csstype: 3.1.1
   solid-js: 1.6.13
-  solid-start: 0.2.23_jvva5bapjtjsxxnm3alyyzvvpa
+  solid-start: 0.2.23_jadobgo2tlpvbvwmonxhe7mota
   solid-start-vercel: 0.2.23_if7ohanqzn44ptg5rbhz3hdfky
   undici: 5.20.0
   written-numbers: 1.0.7
@@ -1696,8 +1696,8 @@ packages:
     dependencies:
       solid-js: 1.6.13
 
-  /@solidjs/router/0.5.1_solid-js@1.6.13:
-    resolution: {integrity: sha512-igyrwUqm/9T26Lb6l7oXwpc4lLUVqbhbN92wOL3NgLoLVmkQlUNTZciuAe+Su8XeJXlrWjl6oxDJDLt+6pws/g==}
+  /@solidjs/router/0.8.0_solid-js@1.6.13:
+    resolution: {integrity: sha512-gvKAfYbuq6rpuNM9E7qIRXOrUEHY4AoOiok3xo/Slw5ph+hvJ+gKRhQgW0Et8xcsq2NZcc4AvJF8VTBmXfwEyA==}
     peerDependencies:
       solid-js: ^1.5.3
     dependencies:
@@ -3581,7 +3581,7 @@ packages:
       polka: 1.0.0-next.22
       rollup: 3.19.1
       sirv: 2.0.2
-      solid-start: 0.2.23_jvva5bapjtjsxxnm3alyyzvvpa
+      solid-start: 0.2.23_jadobgo2tlpvbvwmonxhe7mota
       terser: 5.16.6
       undici: 5.20.0
       vite: 4.1.4_@types+node@18.15.0
@@ -3601,14 +3601,14 @@ packages:
       fast-glob: 3.2.12
       micromatch: 4.0.5
       rollup: 3.19.1
-      solid-start: 0.2.23_jvva5bapjtjsxxnm3alyyzvvpa
+      solid-start: 0.2.23_jadobgo2tlpvbvwmonxhe7mota
       terser: 5.16.6
       vite: 4.1.4_@types+node@18.15.0
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  /solid-start/0.2.23_jvva5bapjtjsxxnm3alyyzvvpa:
+  /solid-start/0.2.23_jadobgo2tlpvbvwmonxhe7mota:
     resolution: {integrity: sha512-dKTRFtpjskHFyLq9n6oJxqWHYL7H8w14y4+OgIR+57+lqb1N7289kZLTHrzWxWyzDkIG9V1s2MQtiDfIaBP/MQ==}
     hasBin: true
     peerDependencies:
@@ -3649,7 +3649,7 @@ packages:
       '@babel/preset-typescript': 7.21.0_@babel+core@7.21.0
       '@babel/template': 7.20.7
       '@solidjs/meta': 0.28.2_solid-js@1.6.13
-      '@solidjs/router': 0.5.1_solid-js@1.6.13
+      '@solidjs/router': 0.8.0_solid-js@1.6.13
       '@types/cookie': 0.5.1
       chokidar: 3.5.3
       compression: 1.7.4
