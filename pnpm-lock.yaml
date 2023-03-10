@@ -25,7 +25,7 @@ specifiers:
   undici: ^5.20.0
   unplugin: ^0.7.2
   vite: ^4.1.4
-  written-numbers: ^1.0.7
+  written-numbers: ^1.0.8
 
 dependencies:
   '@pomsky-lang/unplugin': 1.2.8
@@ -36,7 +36,7 @@ dependencies:
   solid-start: 0.2.23_jadobgo2tlpvbvwmonxhe7mota
   solid-start-vercel: 0.2.23_if7ohanqzn44ptg5rbhz3hdfky
   undici: 5.20.0
-  written-numbers: 1.0.7
+  written-numbers: 1.0.8
 
 devDependencies:
   '@types/markdown-it': 12.2.3
@@ -4056,8 +4056,8 @@ packages:
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /written-numbers/1.0.7:
-    resolution: {integrity: sha512-wO97J11UOoH/EfN5PUuQkCi9FugGIql6JvarTAu4+xr8zs2+N8X96YdurQLHOA1siepdUOJRuE8YlGdt2S4waA==}
+  /written-numbers/1.0.8:
+    resolution: {integrity: sha512-YnCIRWfksT3QDI6JaweSQ3m8m8OF+papSQgk4l5YigdJOr6WG7IWqpdxyMWu1axs8bKwesHxx6h0P+IExjN6jQ==}
     dev: false
 
   /y18n/5.0.8:

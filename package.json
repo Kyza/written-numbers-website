@@ -37,6 +37,6 @@
 		"solid-start": "^0.2.23",
 		"solid-start-vercel": "^0.2.23",
 		"undici": "^5.20.0",
-		"written-numbers": "^1.0.7"
+		"written-numbers": "^1.0.8"
 	}
 }

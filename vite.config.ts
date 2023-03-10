@@ -1,5 +1,4 @@
 import pomsky from "@pomsky-lang/unplugin";
-import vercel from "solid-start-vercel";
 import solid from "solid-start/vite";
 import { UserConfigExport } from "vite";
 
@@ -21,14 +20,4 @@ export default {
 			}),
 		],
 	},
-	// build: {
-	// 	rollupOptions: {
-	// 		plugins: [
-	// 			pomsky.rollup({
-	// 				flavor: "js",
-	// 				includeOriginal: false,
-	// 			}),
-	// 		],
-	// 	},
-	// },
 } as unknown as UserConfigExport;
