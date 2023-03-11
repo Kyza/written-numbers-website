@@ -41,7 +41,8 @@
 	},
 	"pnpm": {
 		"patchedDependencies": {
-			"solid-start-vercel@0.2.23": "patches/solid-start-vercel@0.2.23.patch"
+			"solid-start-vercel@0.2.23": "patches/solid-start-vercel@0.2.23.patch",
+			"@pomsky-lang/unplugin@1.2.8": "patches/@pomsky-lang__unplugin@1.2.8.patch"
 		}
 	}
 }

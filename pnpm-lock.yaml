@@ -4,6 +4,9 @@ patchedDependencies:
   solid-start-vercel@0.2.23:
     hash: untuxzfj6mxsmvfbqsxbjqtzca
     path: patches/solid-start-vercel@0.2.23.patch
+  '@pomsky-lang/unplugin@1.2.8':
+    hash: rl37npmez5b7anxvwi7kz5wuzm
+    path: patches/@pomsky-lang__unplugin@1.2.8.patch
 
 specifiers:
   '@pomsky-lang/unplugin': ^1.2.8
@@ -33,7 +36,7 @@ specifiers:
   written-numbers: ^1.0.8
 
 dependencies:
-  '@pomsky-lang/unplugin': 1.2.8
+  '@pomsky-lang/unplugin': 1.2.8_rl37npmez5b7anxvwi7kz5wuzm
   '@solidjs/meta': 0.28.2_solid-js@1.6.13
   '@solidjs/router': 0.8.0_solid-js@1.6.13
   csstype: 3.1.1
@@ -1598,7 +1601,7 @@ packages:
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
 
-  /@pomsky-lang/unplugin/1.2.8:
+  /@pomsky-lang/unplugin/1.2.8_rl37npmez5b7anxvwi7kz5wuzm:
     resolution: {integrity: sha512-mBKW0GWF1rzkXusLpoRko/aO9X81vEUqM4cqm2UBSIkiei1+7qO3o6gPy+t+R2X/fsRQnqNKOASwv+AcqdzUyA==}
     dependencies:
       d-forest: 3.2.4
@@ -1607,6 +1610,7 @@ packages:
       pomsky-wasm: 0.9.2
       unplugin: 1.2.0
     dev: false
+    patched: true
 
   /@rollup/plugin-commonjs/24.0.1_rollup@3.19.1:
     resolution: {integrity: sha512-15LsiWRZk4eOGqvrJyu3z3DaBu5BhXIMeWnijSRvd8irrrg9SHpQ1pH+BUK4H6Z9wL9yOxZJMTLU+Au86XHxow==}

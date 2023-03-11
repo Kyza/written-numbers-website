@@ -1,0 +1,21 @@
+diff --git a/dist/index.js b/dist/index.js
+index 0a23dc1732652a5556c2f3c16b66895fa8a8e37b..53994669a022d692bb258941e8cab68fe395a2d5 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -9,6 +9,7 @@ import { dirname } from "path";
+ import { fileURLToPath } from "url";
+ import { walk } from "estree-walker";
+ import MagicString from "magic-string";
++import url from "node:url";
+ const __dirname = dirname(fileURLToPath(import.meta.url));
+ const _require = createRequire(import.meta.url);
+ const wasmPath = path.join(_require.resolve("pomsky-wasm"), "..", "pomsky_wasm_bg.wasm");
+@@ -39,7 +40,7 @@ function isPomskyFile(filePath) {
+     return /\.pom(?:sky)?(?:\?.+)?/.test(filePath);
+ }
+ function transformPomskyFile(unplugin, filePath, code, options) {
+-    const pomskyFlavor = new URL(filePath).searchParams.get("flavor");
++    const pomskyFlavor = url.pathToFileURL(filePath).searchParams.get("flavor");
+     return transformTemplate(unplugin, moduleTemplate, filePath, code, {
+         ...options,
+         // It's "safe" to wrecklessly cast here because the compiler will throw its own error.
