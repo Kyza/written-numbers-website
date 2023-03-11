@@ -18,7 +18,7 @@ index 5d972c6ce3d83dc808e8f74b3c01c13a64fcf002..fc63d264e25c49610c83d9b25b841641
 +        config.root === normalizePath(process.cwd())
            ? pathToFileURL(config.root + "/")
 -          : new URL(config.root, pathToFileURL(process.cwd() + "/"));
-+          : new URL(config.root, pathToFileURL(normalizePath(process.cwd()) + "/"));
++          : new URL(config.root, pathToFileURL(normalizePath(process.cwd()) + "/"));console.log(workingDir, config.root === normalizePath(process.cwd()), config.root, normalizePath(process.cwd()));
        const vercelOutputDir = new URL("./.vercel/output/", workingDir); // join(config.root, ".vercel/output");
        const outputDir = new URL("./dist/", workingDir); // join(config.root, ".vercel/output");
        const solidServerDir = new URL("./.solid/server/", workingDir); //  join(config.root, "./.solid/server/");
