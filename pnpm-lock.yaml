@@ -30,7 +30,7 @@ specifiers:
   undici: ^5.20.0
   unplugin: ^0.7.2
   vite: ^4.1.4
-  written-numbers: ^1.0.11
+  written-numbers: ^1.0.12
 
 dependencies:
   '@pomsky-lang/unplugin': 1.2.10
@@ -41,7 +41,7 @@ dependencies:
   solid-start: 0.2.23_udel44vxcxdqx3iljlfrjuub5u
   solid-start-vercel: 0.2.23_untuxzfj6mxsmvfbqsxbjqtzca_if7ohanqzn44ptg5rbhz3hdfky
   undici: 5.20.0
-  written-numbers: 1.0.11
+  written-numbers: 1.0.12
 
 devDependencies:
   '@types/markdown-it': 12.2.3
@@ -1089,7 +1089,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.3.3_@babel+core@7.21.0
       babel-plugin-polyfill-corejs3: 0.6.0_@babel+core@7.21.0
       babel-plugin-polyfill-regenerator: 0.4.1_@babel+core@7.21.0
-      core-js-compat: 3.29.0
+      core-js-compat: 3.29.1
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -1923,7 +1923,7 @@ packages:
     dependencies:
       '@babel/core': 7.21.0
       '@babel/helper-define-polyfill-provider': 0.3.3_@babel+core@7.21.0
-      core-js-compat: 3.29.0
+      core-js-compat: 3.29.1
     transitivePeerDependencies:
       - supports-color
 
@@ -2110,8 +2110,8 @@ packages:
   /convert-source-map/1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
 
-  /core-js-compat/3.29.0:
-    resolution: {integrity: sha512-ScMn3uZNAFhK2DGoEfErguoiAHhV2Ju+oJo/jK08p7B3f3UhocUrCCkTvnZaiS+edl5nlIoiBXKcwMc6elv4KQ==}
+  /core-js-compat/3.29.1:
+    resolution: {integrity: sha512-QmchCua884D8wWskMX8tW5ydINzd8oSJVx38lx/pVkFGqztxt73GYre3pm/hyYq8bPf+MW5In4I/uRShFDsbrA==}
     dependencies:
       browserslist: 4.21.5
 
@@ -4062,8 +4062,8 @@ packages:
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  /written-numbers/1.0.11:
-    resolution: {integrity: sha512-hP+iXatuTbi5juU8JmhCnWUAhNQj6DfRgzKaDkJp6xl7JJVMcgX3Ze7GnAQFjOwKjLuhPwr+6UcStwbWsx2dTA==}
+  /written-numbers/1.0.12:
+    resolution: {integrity: sha512-GBcGipEFnBnCUdQUoW0OS7wf0ZJLE93YeBrzZJBKQsom70o0YLqDG+jluvm9QOeu1jQt84RTJNJ5u4C0V7fhJg==}
     dev: false
 
   /y18n/5.0.8:
