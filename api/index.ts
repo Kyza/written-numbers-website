@@ -36,7 +36,7 @@ function snakeCase(str) {
 
 // import fs from "node:fs";
 
-import wnWASM from "./wasm.json";
+import wnWASM from "./wasm.json" assert { type: "json" };
 // const wnWASM = JSON.parse(fs.readFileSync("./wasm.json", "utf8"));
 
 let didInit = false;
