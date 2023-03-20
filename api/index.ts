@@ -34,14 +34,16 @@ function snakeCase(str) {
 	return str.replace(/[A-Z]/g, (s) => `_${s.toLowerCase()}`);
 }
 
-import wasm from "./written_numbers_wasm_bg.wasm";
+import fs from "node:fs";
+
+const wnWASM = JSON.parse(fs.readFileSync("./wasm.json", "utf8"));
 
 let didInit = false;
 async function initWASM() {
 	if (!didInit) {
 		console.time("Initialized WASM");
 		console.log(wasm);
-		await initWrittenNumbers(wasm);
+		await initWrittenNumbers(wnWASM);
 		console.timeEnd("Initialized WASM");
 		didInit = true;
 	}
