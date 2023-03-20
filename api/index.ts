@@ -40,6 +40,7 @@ let didInit = false;
 async function initWASM() {
 	if (!didInit) {
 		console.time("Initialized WASM");
+		console.log(wasm);
 		await initWrittenNumbers(wasm);
 		console.timeEnd("Initialized WASM");
 		didInit = true;
