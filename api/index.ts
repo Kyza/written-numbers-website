@@ -44,23 +44,20 @@ const wnWASM = Buffer.from(
 // const wnWASM = JSON.parse(fs.readFileSync("./wasm.json", "utf8"));
 
 let didInit = false;
-async function initWASM() {
+function initWASM() {
 	if (!didInit) {
 		console.time("Initialized WASM");
 		console.log(wasm);
-		await initWrittenNumbers(wnWASM);
+		initSync(wnWASM);
 		console.timeEnd("Initialized WASM");
 		didInit = true;
 	}
 }
 
-export default async function handle(
-	req: VercelRequest,
-	res: VercelResponse
-) {
+export default function handle(req: VercelRequest, res: VercelResponse) {
 	res.setHeader("Cache-Control", "s-maxage=86400");
 
-	await initWASM();
+	initWASM();
 
 	const { number } = JSON.parse(req.body);
 
@@ -527,7 +524,7 @@ function initSync(module) {
 	return finalizeInit(instance, module);
 }
 
-async function initWrittenNumbers(input) {
+async function init(input) {
 	if (typeof input === "undefined") {
 		input = new URL("written_numbers_wasm_bg.wasm", import.meta.url);
 	}
