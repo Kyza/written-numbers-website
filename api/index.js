@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+// import type { VercelRequest, VercelResponse } from "@vercel/node";
 import initWrittenWords, { toWords } from "written-numbers";
 
 let didInit = false;
@@ -11,10 +11,12 @@ async function init() {
 	}
 }
 
-export default async function (req: VercelRequest, res: VercelResponse) {
+export default async function (req, res) {
+	res.setHeader("Cache-Control", "s-maxage=86400");
+
 	await init();
 
-	const { number } = req.query;
+	const { number } = JSON.parse(req.body);
 
 	if (typeof number !== "string") {
 		res.statusCode = 400;
