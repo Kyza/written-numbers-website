@@ -47,7 +47,6 @@ let didInit = false;
 function initWASM() {
 	if (!didInit) {
 		console.time("Initialized WASM");
-		console.log(wasm);
 		initSync(wnWASM);
 		console.timeEnd("Initialized WASM");
 		didInit = true;
@@ -59,16 +58,12 @@ export default function handle(req: VercelRequest, res: VercelResponse) {
 
 	initWASM();
 
-	const { number } = req.body;
-
-	if (typeof number !== "string") {
+	if (typeof req.body.number !== "string") {
 		res.statusCode = 400;
 		return res.send("number must be of type string");
 	}
 
-	const words = toWords({
-		number,
-	});
+	const words = toWords(req.body);
 
 	res.send(words);
 }
