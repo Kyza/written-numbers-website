@@ -54,8 +54,6 @@ function initWASM() {
 }
 
 export default function handle(req: VercelRequest, res: VercelResponse) {
-	res.setHeader("Cache-Control", "s-maxage=86400");
-
 	initWASM();
 
 	if (typeof req.body.number !== "string") {
