@@ -34,9 +34,10 @@ function snakeCase(str) {
 	return str.replace(/[A-Z]/g, (s) => `_${s.toLowerCase()}`);
 }
 
-import fs from "node:fs";
+// import fs from "node:fs";
 
-const wnWASM = JSON.parse(fs.readFileSync("./wasm.json", "utf8"));
+import wnWASM from "./wasm.json";
+// const wnWASM = JSON.parse(fs.readFileSync("./wasm.json", "utf8"));
 
 let didInit = false;
 async function initWASM() {
