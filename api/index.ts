@@ -59,7 +59,7 @@ export default function handle(req: VercelRequest, res: VercelResponse) {
 
 	initWASM();
 
-	const { number } = JSON.parse(req.body);
+	const { number } = req.body;
 
 	if (typeof number !== "string") {
 		res.statusCode = 400;
