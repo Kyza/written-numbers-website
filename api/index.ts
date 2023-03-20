@@ -34,11 +34,13 @@ function snakeCase(str) {
 	return str.replace(/[A-Z]/g, (s) => `_${s.toLowerCase()}`);
 }
 
+import wasm from "./written_numbers_wasm_bg.wasm";
+
 let didInit = false;
 async function initWASM() {
 	if (!didInit) {
 		console.time("Initialized WASM");
-		await initWrittenNumbers();
+		await initWrittenNumbers(wasm);
 		console.timeEnd("Initialized WASM");
 		didInit = true;
 	}
